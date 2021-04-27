@@ -1,0 +1,94 @@
+<!DOCTYPE HTML>
+<!--
+	Phantom by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>지역별 코로나 예방접종 센터</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<div class="inner">
+
+							<!-- Logo -->
+								<a href="index.html" class="logo">
+									<span class="symbol"><img src="images/logo.svg" alt="" /></span><span class="title">지역별 코로나 예방접종 센터</span>
+								</a>
+						</div>
+					</header>
+
+				<!-- Main -->
+					<div id="main">
+						<div class="inner">
+							<h1>Seoul 서울특별시</h1>
+							<span class="image main"><img src="images/pic13.jpg" alt="" /></span>
+							<div id="name1" style="font-weight: bold; margin-bottom: 10px;"></div>
+							<div id="facility1" style="float:inline-start; margin-bottom: 10px;"></div>
+							<div id="address1" style="float:inline-start; margin-bottom: 10px;"></div>
+							<div id="map1" style="width:auto; height: 300px; margin-bottom: 30px;";></div>
+							<hr>
+							<div id="name2" style="font-weight: bold; margin-bottom: 10px;"></div>
+							<div id="facility2" style="float:inline-start; margin-bottom: 10px;"></div>
+							<div id="address2" style="float:inline-start; margin-bottom: 10px;"></div>
+							<div id="map2" style="width:auto; height: 300px; margin-bottom: 30px;";></div>
+							<hr>
+							<!-- <p id="map2"></p>
+								<p id="map3"></p>
+								<p id="map4"></p> -->
+								<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e76482cc2e05a87ddda66a4c2e7713fb"></script>
+								<script>
+									fetch('https://api.odcloud.kr/api/15077586/v1/centers?page=1&perPage=10', 
+									{
+										headers: new Headers({
+											'Authorization': 'Infuser data-portal-test-key'})
+										}).then((res) => res.json())
+										.then( (obj) => {
+											console.log(obj);
+											let count = 1;
+											for (let i = 0; i < obj.data.length; i++) {
+												if (obj.data[i].sido !== "서울특별시") continue;
+												document.getElementById('name' + count).innerHTML = obj.data[i].centerName;
+												document.getElementById('facility' + count).innerHTML = obj.data[i].facilityName;
+												document.getElementById('address' + count).innerHTML = obj.data[i].address;
+											var container = document.getElementById('map' + count);
+											count++;
+											var options = {
+												center: new kakao.maps.LatLng(obj.data[i].lng, obj.data[i].lat),
+												level: 4
+											};
+											var map = new kakao.maps.Map(container, options);
+											// 마커가 표시될 위치
+											var markerPosition  = new kakao.maps.LatLng(obj.data[i].lng, obj.data[i].lat); 
+											// 마커 생성
+											var marker = new kakao.maps.Marker({
+												position: markerPosition
+											});
+											// 마커 지도 위에 표시
+											marker.setMap(map);
+										}
+										
+									});
+							</script>
+						</div>
+					</div>
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
